@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Random;
+import java.util.Collections;
 public class Password {
     /**
      * Hashes the provided password using the SHA-256 algorithm.
@@ -63,10 +64,32 @@ public class Password {
      * @return true if the password is strong, false otherwise
      */
     public static boolean isStrongPassword(String password) {
-
-        // Code here
-
-        return false;
+        boolean len = false;
+        boolean min = false;
+        boolean maj = false;
+        boolean num = false;
+        boolean nospace = true;
+        if (password.length() >= 12) {
+            len = true;
+        }
+        for (char c : password.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                maj = true; 
+            }
+            if (Character.isLowerCase(c)) {
+                min = true;
+            }
+            if (Character.isDigit(c)) {
+                num = true;
+            }
+            if (Character.isWhitespace(c)) {
+                nospace = false;
+            }
+        }
+        if (maj && min && num && nospace && len) {
+            return true;
+        }
+        return false; 
     }
 
     /**
@@ -78,10 +101,12 @@ public class Password {
      *         true if the password is strong, false otherwise
      */
     public static HashMap<String, Boolean> checkPasswordsList(ArrayList<String> passwords) {
-
-        // Code here
-
-        return null;
+        HashMap<String, Boolean> passwordStrengthMap = new HashMap<>();
+        for (String password : passwords) {
+            boolean isStrong = isStrongPassword(password);
+            passwordStrengthMap.put(password, isStrong);
+        }
+        return passwordStrengthMap;
     }
 
     /**
@@ -97,10 +122,28 @@ public class Password {
      * @return A randomly generated password that meets the security criteria.
      */
     public static String generatePassword(int nbCar) {
+        Random rand = new Random();
+        if (nbCar < 4){
+            return false;
+        }
+        
+        String alphabetMajuscules = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String alphabetMinuscules = "abcdefghijklmnopqrstuvwxyz";
+        String numbers = "0123456789";
+        String specials = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
-        // Code here
+        String all_char = alphabetMajuscules+alphabetMinuscules+specials+numbers;
+        ArrayList<Character> list = new ArrayList<>();
+        list.add(numbers.charAt(rand.nextInt(numbers.length())));
+        list.add(specials.charAt(rand.nextInt(specials.length())));
+        list.add(alphabetMajuscules.charAt(rand.nextInt(alphabetMajuscules.length())));
+        list.add(alphabetMinuscules.charAt(rand.nextInt(alphabetMinuscules.length())));
 
-        return null;
+        for (int i; i <= nbCar-4; i++){
+            list.add(all_char.charAt(rand.nextInt(all_char.length())));
+        }
+        Collections.shuffle(list);
+        return list.toString();
     }
 
     public static void main(String[] args) {
