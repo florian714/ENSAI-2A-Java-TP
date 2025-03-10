@@ -10,9 +10,27 @@ public class Library {
     // -------------------------------------------------------
     // Attributes
     // -------------------------------------------------------
-    private String attribute1;
-    private int attribute2;
+    private String name;
+    private List books;
 
+    public Library(String name, List books) {
+        this.name = name;
+        this.books = books
+    }
+
+    public void addBook(Book book) {
+        this.books.add(book)
+
+    }
+
+    public void displayBooks(){
+        if (this.books.isEmpty()) {
+            System.err.println("Erreur : La liste est vide !");
+        }
+        for (book in books){
+            System.out.println(this.books.toString());
+        }
+        
     /**
      * Loads books from a CSV file and adds them to the library.
      * 

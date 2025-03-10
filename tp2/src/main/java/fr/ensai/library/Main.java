@@ -12,6 +12,11 @@ public class Main {
                 tolkien,
                 1954,
                 423);
+        
+        Library lesfousdulivre = new Library(
+            "lesfousdulivre",
+            loadBooksFromCSV("ENSAI-2A-Java-TP/tp2/src/main/resources/books.csv")
+        )
 
         System.out.println(fellowshipOfTheRing.toString());
     }
